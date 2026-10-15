@@ -7,19 +7,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.1.1</version>
-        <relativePath/>
+        <groupId>com.gururaj</groupId>
+        <artifactId>distributed-job-platform</artifactId>
+        <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.gururaj</groupId>
     <artifactId>job-service</artifactId>
-    <version>1.0-SNAPSHOT</version>
-
-    <properties>
-        <java.version>24</java.version>
-    </properties>
 
     <dependencies>
 
@@ -27,6 +20,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
+<!--        <properties>-->
+<!--            <java.version>17</java.version>-->
+<!--            <maven.compiler.source>17</maven.compiler.source>-->
+<!--            <maven.compiler.target>17</maven.compiler.target>-->
+<!--        </properties>-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -54,7 +53,6 @@
             <artifactId>micrometer-registry-prometheus</artifactId>
         </dependency>
 
-<<<<<<< HEAD
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -66,8 +64,6 @@
             <artifactId>spring-kafka</artifactId>
         </dependency>
 
-=======
->>>>>>> 0c6b0e97e9c5775c66967162ec2b50dbd074f66d
     </dependencies>
 
     <build>

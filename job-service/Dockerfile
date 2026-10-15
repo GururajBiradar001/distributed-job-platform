@@ -1,19 +1,18 @@
-FROM maven:3.9-eclipse-temurin-24 AS build
+FROM maven:3.9-eclipse-temurin-21 AS build
 
 WORKDIR /app
 
-COPY job-service/pom.xml ./job-service/pom.xml
-COPY pom.xml ./pom.xml
-COPY job-service/src ./job-service/src
+COPY pom.xml .
+COPY src ./src
 
-RUN mvn -f job-service/pom.xml clean package -DskipTests
+RUN mvn clean package -DskipTests
 
-FROM eclipse-temurin:24-jre
+FROM eclipse-temurin:21-jre
 
 WORKDIR /app
 
-COPY --from=build /app/job-service/target/*.jar app.jar
+COPY --from=build /app/target/*.jar app.jar
 
-EXPOSE 8081
+EXPOSE 8080
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
