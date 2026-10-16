@@ -23,7 +23,7 @@ public class KafkaConsumerConfig {
 
         properties.put(
                 ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,
-                "kafka:9092"
+                System.getenv().getOrDefault("KAFKA_BOOTSTRAP_SERVERS", "kafka:9092")
         );
 
         properties.put(
