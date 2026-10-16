@@ -1,0 +1,6 @@
+[deploy]
+startCommand = "java -jar app.jar"
+healthcheckPath = "/actuator/health/liveness"
+healthcheckTimeout = 300
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 3
