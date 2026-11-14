@@ -2,6 +2,7 @@ package com.gururaj.jobservice.config;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -21,10 +22,15 @@ public class DataSourceConfig {
             } else if (url.startsWith("postgresql://")) {
                 url = "jdbc:postgresql://" + url.substring("postgresql://".length());
             }
+            properties.setUrl(url);
         }
-        return properties.initializeDataSourceBuilder()
+
+        return DataSourceBuilder.create()
                 .type(HikariDataSource.class)
+                .driverClassName("org.postgresql.Driver")
                 .url(url)
+                .username(properties.getUsername())
+                .password(properties.getPassword())
                 .build();
     }
 }
