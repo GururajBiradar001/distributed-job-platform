@@ -2,36 +2,56 @@ services:
   - type: web
     name: job-service
     runtime: docker
-    dockerContext: .
+    dockerContext: job-service
     dockerfilePath: job-service/Dockerfile
-    plan: starter
+    plan: free
     healthCheckPath: /actuator/health
     envVars:
       - key: DB_URL
         fromDatabase:
           name: distributed-jobs-db
           property: connectionString
+      - key: DB_USERNAME
+        fromDatabase:
+          name: distributed-jobs-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: distributed-jobs-db
+          property: password
       - key: KAFKA_BOOTSTRAP_SERVERS
+        sync: false
+      - key: SPRING_KAFKA_PROPERTIES_SECURITY_PROTOCOL
+        value: SASL_SSL
+      - key: SPRING_KAFKA_PROPERTIES_SASL_MECHANISM
+        value: SCRAM-SHA-256
+      - key: SPRING_KAFKA_PROPERTIES_SASL_JAAS_CONFIG
         sync: false
       - key: PORT
         value: 8081
 
-  - type: worker
+  - type: web
     name: worker-service
     runtime: docker
-    dockerContext: .
+    dockerContext: worker-service
     dockerfilePath: worker-service/Dockerfile
-    plan: starter
+    plan: free
+    healthCheckPath: /actuator/health
     envVars:
+      - key: JOB_SERVICE_URL
+        value: http://job-service:8081
       - key: KAFKA_BOOTSTRAP_SERVERS
         sync: false
       - key: KAFKA_CONSUMER_GROUP
         value: job-workers
-      - key: JOB_SERVICE_URL
-        fromService:
-          type: web
-          name: job-service
-          property: host
+      - key: SPRING_KAFKA_PROPERTIES_SECURITY_PROTOCOL
+        value: SASL_SSL
+      - key: SPRING_KAFKA_PROPERTIES_SASL_MECHANISM
+        value: SCRAM-SHA-256
+      - key: SPRING_KAFKA_PROPERTIES_SASL_JAAS_CONFIG
+        sync: false
+      - key: PORT
+        value: 8082
 
 databases:
   - name: distributed-jobs-db
