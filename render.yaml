@@ -56,5 +56,5 @@ services:
 databases:
   - name: distributed-jobs-db
     databaseName: distributed_jobs
-    user: postgres
+    user: jobuser
     plan: free
