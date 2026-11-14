@@ -120,21 +120,6 @@ curl http://localhost:8081/jobs/d1a31ca6-7958-4f30-9544-2ac85f9606dc
 
 ---
 
-## ☁️ 100% Free Cloud Deployment (Render + Upstash)
-
-This repository includes a `render.yaml` blueprint configured for **Render's Free Tier** ($0/month):
-
-1. **Create Free Kafka**:
-   * Create a free cluster at [console.upstash.com](https://console.upstash.com) (no credit card needed).
-   * Create topics: `job-events`, `job-results`, `job-dead-letter`.
-2. **Deploy on Render**:
-   * In [Render](https://render.com), click **New** -> **Blueprint**.
-   * Connect this GitHub repo.
-   * Render automatically provisions a free PostgreSQL database, `job-service`, and `worker-service`.
-   * Add your Upstash bootstrap server and credentials into the environment variables.
-
----
-
 ## 🛠️ Tech Stack
 
 * **Language**: Java 21 (LTS)
