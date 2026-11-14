@@ -2,8 +2,8 @@ FROM maven:3.9-eclipse-temurin-21 AS build
 
 WORKDIR /app
 
-COPY job-service/pom.xml ./pom.xml
-COPY job-service/src ./src
+COPY pom.xml ./pom.xml
+COPY src ./src
 
 RUN mvn clean package -DskipTests
 

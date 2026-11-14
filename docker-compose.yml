@@ -38,8 +38,8 @@ services:
 
   job-service:
     build:
-      context: .
-      dockerfile: job-service/Dockerfile
+      context: ./job-service
+      dockerfile: Dockerfile
     container_name: job-service
     ports:
       - "8081:8081"
@@ -56,8 +56,8 @@ services:
 
   worker-service:
     build:
-      context: .
-      dockerfile: worker-service/Dockerfile
+      context: ./worker-service
+      dockerfile: Dockerfile
     container_name: worker-service
     ports:
       - "8082:8082"
