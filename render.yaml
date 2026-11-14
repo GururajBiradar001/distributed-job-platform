@@ -1,0 +1,40 @@
+services:
+  - type: web
+    name: job-service
+    runtime: docker
+    dockerContext: .
+    dockerfilePath: job-service/Dockerfile
+    plan: starter
+    healthCheckPath: /actuator/health
+    envVars:
+      - key: DB_URL
+        fromDatabase:
+          name: distributed-jobs-db
+          property: connectionString
+      - key: KAFKA_BOOTSTRAP_SERVERS
+        sync: false
+      - key: PORT
+        value: 8081
+
+  - type: worker
+    name: worker-service
+    runtime: docker
+    dockerContext: .
+    dockerfilePath: worker-service/Dockerfile
+    plan: starter
+    envVars:
+      - key: KAFKA_BOOTSTRAP_SERVERS
+        sync: false
+      - key: KAFKA_CONSUMER_GROUP
+        value: job-workers
+      - key: JOB_SERVICE_URL
+        fromService:
+          type: web
+          name: job-service
+          property: host
+
+databases:
+  - name: distributed-jobs-db
+    databaseName: distributed_jobs
+    user: postgres
+    plan: free
